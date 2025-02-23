@@ -7,11 +7,11 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 import javax.crypto.SecretKey;
@@ -43,8 +43,14 @@ public class TokenService {
 
   private final String accessHeader = "Authorization";
   private final String refreshHeader = "RefreshToken";
-  private final Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
+  private SecretKey key;
+
+  @PostConstruct
+  protected void init() {
+    byte[] keyBytes = Base64.getDecoder().decode(secretKey);
+    this.key = Keys.hmacShaKeyFor(keyBytes);
+  }
 
   public String createAccessToken(String email, long memberId) {
 
@@ -102,7 +108,7 @@ public class TokenService {
   private Claims parseClaims(String trimmedToken) {
     try {
 
-      return Jwts.parser().verifyWith((SecretKey) key).build().parseSignedClaims(trimmedToken).getPayload();
+      return Jwts.parser().verifyWith(key).build().parseSignedClaims(trimmedToken).getPayload();
 
     } catch (MalformedJwtException e) {
       log.error("parseClaims: [MalFormed] 잘못된 인증 정보");

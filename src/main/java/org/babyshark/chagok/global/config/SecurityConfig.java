@@ -1,11 +1,10 @@
 package org.babyshark.chagok.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.babyshark.chagok.domain.member.application.OAuthUserCustomService;
 import org.babyshark.chagok.domain.member.application.MemberService;
+import org.babyshark.chagok.domain.member.application.OAuthUserCustomService;
 import org.babyshark.chagok.domain.member.repository.MemberRepository;
 import org.babyshark.chagok.global.auth.HttpCookieOAuth2AuthorizationRequestRepository;
 import org.babyshark.chagok.global.auth.TokenService;
@@ -29,7 +28,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +35,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
   private final AppConfig appConfig;
-  private final CorsProperties corsProperties;
   private final AppProperties appProperties;
   private final TokenService tokenService;
   private final MemberRepository memberRepository;
@@ -138,25 +135,6 @@ public class SecurityConfig {
   @Bean
   public OAuth2LoginFailureHandler oAuth2AuthenticationFailureHandler() {
     return new OAuth2LoginFailureHandler(oAuth2AuthorizationRequestRepository());
-  }
-
-  /*
-   * Cors 설정
-   * */
-  @Bean
-  public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-    UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
-
-    CorsConfiguration corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedHeaders(
-        Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
-    corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
-    corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
-    corsConfig.setAllowCredentials(true);
-    corsConfig.setMaxAge(corsConfig.getMaxAge());
-
-    corsConfigSource.registerCorsConfiguration("/**", corsConfig);
-    return corsConfigSource;
   }
 
 }
