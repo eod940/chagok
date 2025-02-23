@@ -40,6 +40,10 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+  jwt:
+    secret-key: ${JWT_SECRET}
+
   security:
     oauth2:
       client:
@@ -69,3 +73,17 @@ logging:
         type:
           descriptor:
             sql: trace
+
+# cors 설정
+cors:
+  allowed-origins:
+    - http://localhost:3000
+    - http://localhost:5173
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: '*'
+  max-age: 3600
+
+app:
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8080/oauth2/callback

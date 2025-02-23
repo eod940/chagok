@@ -1,4 +1,4 @@
-package org.babyshark.chagok.domain.model;
+package org.babyshark.chagok.global.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

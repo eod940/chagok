@@ -1,12 +1,12 @@
 package org.babyshark.chagok.domain.member.domain;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ElementCollection;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.babyshark.chagok.domain.member.dto.SignupForm;
-import org.babyshark.chagok.domain.model.Role;
+import org.babyshark.chagok.global.model.Provider;
+import org.babyshark.chagok.global.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,10 +39,14 @@ public class Member implements UserDetails {
   private String profileImageUrl;  // 프로필사진
   private String gender;  // 성별
   private String age;  // 연령대
+  private String refreshToken;  // 리프레시 토큰(TokenService)
 
   @ElementCollection
   @Enumerated(EnumType.STRING)
   private List<Role> role;  // 권한
+
+  private Provider provider;  // 로그인 주체
+  private String providerId;  // 소셜로그인시 Id
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,6 +58,17 @@ public class Member implements UserDetails {
   @Override
   public String getUsername() {
     return "";
+  }
+
+  public void updateRefreshToken(String refreshToken) {
+    this.refreshToken = refreshToken;
+  }
+
+  public Member update(String name, String profileUrl) {
+    this.name = name;
+    this.profileImageUrl = profileUrl;
+
+    return this;
   }
 
   public static Member from(SignupForm signup, String password) {
