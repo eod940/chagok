@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,6 @@ import org.babyshark.chagok.domain.member.dto.SignupForm;
 import org.babyshark.chagok.global.model.Provider;
 import org.babyshark.chagok.global.model.Role;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -27,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
-public class Member implements UserDetails {
+public class Member {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,20 +43,9 @@ public class Member implements UserDetails {
   @Enumerated(EnumType.STRING)
   private List<Role> role;  // 권한
 
+  @Enumerated(EnumType.STRING)
   private Provider provider;  // 로그인 주체
   private String providerId;  // 소셜로그인시 Id
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.role.stream()
-        .map(role -> new SimpleGrantedAuthority(role.name()))
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public String getUsername() {
-    return "";
-  }
 
   public void updateRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;

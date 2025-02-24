@@ -19,13 +19,13 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
 
   public PrincipalDetails(Member member) {
     this.member = member;
-    this.authorities = member.getAuthorities();
+//    this.authorities = member.getAuthorities();
   }
 
   public PrincipalDetails(Member member, Map<String, Object> attributes) {
     this.member = member;
     this.attributes = attributes;
-    this.authorities = member.getAuthorities();
+//    this.authorities = member.getAuthorities();
   }
 
   @Override
@@ -40,12 +40,12 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
 
   @Override
   public String getPassword() {
-    return "";
+    return member.getPassword();
   }
 
   @Override
   public String getUsername() {
-    return "";
+    return member.getEmail();
   }
 
   @Override

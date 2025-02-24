@@ -44,7 +44,11 @@ public class OAuthUserCustomService implements OAuth2UserService<OAuth2UserReque
 
     // OAuth2 로그인을 통해 가져온 OAuth2User의 attribute를 담아주는 of 메소드.
     OAuthAttributes extractAttr = OAuthAttributes.of(memberAttributedName, attributes);
-    log.info("OAuth2 User Email: " + extractAttr.getOauth2UserInfo().getEmail());
+    log.info("OAuth2 User Name: {}", extractAttr.getOauth2UserInfo().getName());
+    log.info("OAuth2 User Email: {}", extractAttr.getOauth2UserInfo().getEmail());
+    log.info("OAuth2 User Age: {}", extractAttr.getOauth2UserInfo().getAge());
+    log.info("OAuth2 User ProfileUrl: {}", extractAttr.getOauth2UserInfo().getProfileUrl());
+    log.info("OAuth2 User ProviderId: {}", extractAttr.getOauth2UserInfo().getProviderId());
     Member member = getMember(extractAttr, provider);
 
     return new PrincipalDetails(member, attributes);
@@ -53,18 +57,18 @@ public class OAuthUserCustomService implements OAuth2UserService<OAuth2UserReque
   private Provider getProvider(String registrationId) {
     // 다른 소셜로그인이 있다면 추가해야합니다.
     log.info(registrationId + " 로그인 진행중");
-    return Provider.KAKAO;
+    return Provider.NAVER;
   }
 
   /**
    * provider와 providerId로 유저를 찾습니다. 유저가 없을 경우 회원가입 후 Member를 리턴합니다.
    */
   private Member getMember(OAuthAttributes extractAttribute, Provider provider) {
-    String gottenNickName = extractAttribute.getOauth2UserInfo().getName();
-    String gottenProfile = extractAttribute.getOauth2UserInfo().getName();
+    String name = extractAttribute.getOauth2UserInfo().getName();
+    String profileUrl = extractAttribute.getOauth2UserInfo().getProfileUrl();
     return memberRepository.findByProviderAndProviderId(
             provider, extractAttribute.getOauth2UserInfo().getProviderId())
-        .map(member -> member.update(gottenNickName, gottenProfile))
+        .map(member -> member.update(name, profileUrl))
         .orElseGet(() -> updateAndSave(extractAttribute, provider));
   }
 

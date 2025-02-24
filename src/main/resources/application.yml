@@ -54,6 +54,9 @@ spring:
             scope:
               - name
               - email
+              - gender
+              - age
+              - profile_image
             client-name: Naver
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/oauth2/callback/naver
@@ -86,4 +89,4 @@ cors:
 app:
   oauth2:
     authorizedRedirectUris:
-      - http://localhost:8080/oauth2/callback
+      - http://localhost:8080/oauth2/callback/naver

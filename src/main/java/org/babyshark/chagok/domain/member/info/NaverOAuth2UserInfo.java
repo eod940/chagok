@@ -10,32 +10,32 @@ public class NaverOAuth2UserInfo extends OAuth2UserInfo {
 
   @Override
   public String getEmail() {
-    return getValue("naver_account", "email");
+    return getValue("response", "email");
   }
 
   @Override
   public String getName() {
-    return "";
+    return getValue("response", "name");
   }
 
   @Override
   public String getProviderId() {
-    return "";
+    return getValue("response", "id");
   }
 
   @Override
   public String getProfileUrl() {
-    return "";
+    return getValue("response", "profile_image");
   }
 
   @Override
   public String getGender() {
-    return "";
+    return getValue("response", "gender");
   }
 
   @Override
   public String getAge() {
-    return "";
+    return getValue("response", "age");
   }
 
   private String getValue(String... keys) {
