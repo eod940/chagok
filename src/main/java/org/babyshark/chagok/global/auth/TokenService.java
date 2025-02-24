@@ -54,9 +54,10 @@ public class TokenService {
 
   public String createAccessToken(String email, long memberId) {
 
-    Claims claims = Jwts.claims().subject(ACCESS_SUBJECT).build();
-    claims.put(CLAIM_EMAIL, email);
-    claims.put(CLAIM_MEMBER_ID, memberId);
+    Claims claims = Jwts.claims().subject(ACCESS_SUBJECT)
+        .add(CLAIM_EMAIL, email)
+        .add(CLAIM_MEMBER_ID, memberId)
+        .build();
 
     Date now = new Date();
     Date expiredDate = new Date(now.getTime() + ACCESS_TOKEN_VALID_TIME);
