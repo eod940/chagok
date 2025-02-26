@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.AccessLevel;
@@ -14,7 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.babyshark.chagok.domain.asset.domain.Asset;
 import org.babyshark.chagok.domain.member.dto.SignupForm;
+import org.babyshark.chagok.global.auditing.BaseEntity;
 import org.babyshark.chagok.global.model.Provider;
 import org.babyshark.chagok.global.model.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
-public class Member {
+public class Member extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +42,9 @@ public class Member {
   private String gender;  // 성별
   private String age;  // 연령대
   private String refreshToken;  // 리프레시 토큰(TokenService)
+
+  @OneToMany(mappedBy = "member")
+  private List<Asset> assets = new ArrayList<>();
 
   @ElementCollection
   @Enumerated(EnumType.STRING)

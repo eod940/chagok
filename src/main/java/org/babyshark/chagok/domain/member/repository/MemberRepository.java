@@ -1,6 +1,5 @@
 package org.babyshark.chagok.domain.member.repository;
 
-import io.micrometer.observation.ObservationFilter;
 import java.util.Optional;
 import org.babyshark.chagok.domain.member.domain.Member;
 import org.babyshark.chagok.global.model.Provider;
