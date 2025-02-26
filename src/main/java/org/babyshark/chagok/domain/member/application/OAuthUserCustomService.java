@@ -57,7 +57,15 @@ public class OAuthUserCustomService implements OAuth2UserService<OAuth2UserReque
   private Provider getProvider(String registrationId) {
     // 다른 소셜로그인이 있다면 추가해야합니다.
     log.info(registrationId + " 로그인 진행중");
-    return Provider.NAVER;
+
+    if (registrationId.equals("kakao")) {
+      return Provider.KAKAO;
+    }
+    if (registrationId.equals("naver")) {
+      return Provider.NAVER;
+    }
+
+    return null;
   }
 
   /**

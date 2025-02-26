@@ -4,6 +4,7 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import org.babyshark.chagok.domain.member.domain.Member;
+import org.babyshark.chagok.domain.member.info.KakaoOAuth2UserInfo;
 import org.babyshark.chagok.domain.member.info.NaverOAuth2UserInfo;
 import org.babyshark.chagok.domain.member.info.OAuth2UserInfo;
 import org.babyshark.chagok.global.model.Provider;
@@ -23,7 +24,7 @@ public class OAuthAttributes {
   public static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes) {
     return OAuthAttributes.builder()
         .nameAttributeKey(userNameAttributeName)
-        .oauth2UserInfo(new NaverOAuth2UserInfo(attributes))
+        .oauth2UserInfo(new KakaoOAuth2UserInfo(attributes))
         .build();
   }
 
