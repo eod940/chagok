@@ -33,7 +33,7 @@ public class AssetConroller {
   }
 
   @GetMapping("/list")
-  public ResponseEntity<AssetResponse> listAssets(@RequestHeader("Authorization") String token) {
+  public ResponseEntity<String> listAssets(@RequestHeader("Authorization") String token) {
 
     var memberId = tokenService.getMemberId(token);
     assetService.getAssetsByUserId(memberId);
