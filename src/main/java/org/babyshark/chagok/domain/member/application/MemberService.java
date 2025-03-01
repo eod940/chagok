@@ -78,4 +78,9 @@ public class MemberService implements UserDetailsService {
     // 비밀번호 인코딩하여 저장
     return memberRepository.save(Member.from(signup, passwordEncoder.encode(signup.password())));
   }
+
+  public Member getMember(long memberId) {
+    return memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.INVALID_JWT_M));
+  }
 }

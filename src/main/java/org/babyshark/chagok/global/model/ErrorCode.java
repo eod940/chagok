@@ -17,7 +17,10 @@ public enum ErrorCode {
   INVALID_JWT_U("[Unsupported] 잘못된 접근 입니다.", HttpStatus.UNAUTHORIZED),
   INVALID_JWT_I("[Illegal] 잘못된 접근 입니다.", HttpStatus.UNAUTHORIZED),
   EXIST_EMAIL("이미 존재하는 이메일입니다.", HttpStatus.UNAUTHORIZED),
-  UNVALIDATED_REDIRECT_URI("인증에 실패하였습니다.\n(Unauthorized uri)", HttpStatus.UNAUTHORIZED);
+  UNVALIDATED_REDIRECT_URI("인증에 실패하였습니다.\n(Unauthorized uri)", HttpStatus.UNAUTHORIZED),
+
+  // 404
+  PAGE_NOT_FOUND("페이지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
 
   private final String description;
   private final HttpStatus statusCode;

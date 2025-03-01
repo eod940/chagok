@@ -11,7 +11,7 @@ public record AssetRequest(BigDecimal monthlyAllowance,
                            List<String> assetCategoryNames,
                            String fixedExpensesCategory,
                            boolean hasItem,
+                           String itemName,
                            BigDecimal itemPrice,
-                           BigDecimal savings,
-                           Member member) {
+                           BigDecimal savings) {
 }

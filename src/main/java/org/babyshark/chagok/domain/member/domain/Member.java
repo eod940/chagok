@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,8 +20,6 @@ import org.babyshark.chagok.domain.member.dto.SignupForm;
 import org.babyshark.chagok.global.auditing.BaseEntity;
 import org.babyshark.chagok.global.model.Provider;
 import org.babyshark.chagok.global.model.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
