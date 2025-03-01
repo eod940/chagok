@@ -1,16 +1,19 @@
 package org.babyshark.chagok.domain.chat.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import net.minidev.json.annotate.JsonIgnore;
 import org.babyshark.chagok.domain.member.domain.Member;
 import org.babyshark.chagok.global.auditing.BaseEntity;
+import org.babyshark.chagok.global.model.Mbti;
 
 @Entity
 @SuperBuilder
@@ -22,18 +25,21 @@ public class ChatMessage extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long chatMessageId;
 
-  private long chatRoomId;  // entj, istj, enfp, isfp (1, 2, 3, 4 순)
-  private String message;  // 메시지
-
-  @JsonIgnore
   @ManyToOne
-  private Member member;  // 사용자
+  @JoinColumn(name = "member_id")
+  private Member member;
 
-  // 생성 메서드
-  public static ChatMessage create(long chatRoomId, String message, Member member) {
+  @Enumerated(EnumType.STRING)
+  private Mbti mbti;  // AI 종류
+
+  private String question;  // 사용자 질문
+  private String answer;  // AI 답
+
+  public static ChatMessage create(Mbti mbti, String question, String answer, Member member) {
     return ChatMessage.builder()
-        .chatRoomId(chatRoomId)
-        .message(message)
+        .mbti(mbti)
+        .question(question)
+        .answer(answer)
         .member(member)
         .build();
   }

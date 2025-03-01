@@ -31,7 +31,7 @@ public class ClovaService {
     return requestWebClient(request);
   }
 
-  // ISG 메서드
+  // ISTJ 대화 메서드
   public Flux<String> createISTJPersona(String message) {
     ClovaDto.ChatBotRequestDto request = ClovaDto.ChatBotRequestDto.istjRequestOf();
     request.getMessages().add(Message.creatUserOf(message));
@@ -39,7 +39,7 @@ public class ClovaService {
     return requestWebClient(request);
   }
 
-  // 돌아보기 페르소나 요약을 생성하는 메서드
+  // ENFP 대화 메서드
   public Flux<String> createENFPPersona(String message) {
     ClovaDto.ChatBotRequestDto request = ClovaDto.ChatBotRequestDto.enfpRequestOf();
     request.getMessages().add(Message.creatUserOf(message));
@@ -47,7 +47,7 @@ public class ClovaService {
     return requestWebClient(request);
   }
 
-  // 돌아보기 페르소나 키워드를 생성하는 메서드
+  // ISFP 대화 메서드
   public Flux<String> createISFPPersona(String message) {
     ClovaDto.ChatBotRequestDto request = ClovaDto.ChatBotRequestDto.isfpRequestOf();
     request.getMessages().add(Message.creatUserOf(message));
@@ -76,9 +76,22 @@ public class ClovaService {
         .header("Authorization", "Bearer " + apiKey)
         .header("X-NCP-CLOVASTUDIO-REQUEST-ID", requestId)
         .header("Content-Type", "application/json")
-        .header("Accept", "text/event-stream; charset=utf-8") // 스트리밍 데이터 처리
+//        .header("Accept", "text/event-stream; charset=utf-8") // 스트리밍 데이터 처리
         .body(Mono.just(request), request.getClass())
         .retrieve()
         .bodyToFlux(String.class); // 스트리밍 응답 처리
+  }
+
+  public Flux<String> requestStreamWebClient(ClovaDto.ChatBotRequestDto request) {
+    return webClient.post()
+        .uri("https://clovastudio.stream.ntruss.com/testapp/v1/chat-completions/HCX-003")
+        .header("X-NCP-CLOVASTUDIO-API-KEY", "NTA0MjU2MWZlZTcxNDJiY0Ikp4zHEBcxTiaD/oP+FbX0Ki7+l6QfVnh0uiVX11R7")
+        .header("X-NCP-APIGW-API-KEY","g6iD7ZjGVm206to5vDxXrVQNd9OaKJaO2ezNXyY3")
+        .header("X-NCP-CLOVASTUDIO-REQUEST-ID", "bed143d429854c9b83d43f9ab1c698d7")
+        .header("Content-Type", "application/json")
+        .header("Accept", "text/json; charset=utf-8") // 스트리밍 데이터 처리
+        .body(Mono.just(request), request.getClass())
+        .retrieve()
+        .bodyToFlux(String.class); // 모노 응답 처리
   }
 }

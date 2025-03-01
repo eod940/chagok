@@ -91,7 +91,7 @@ public class ClovaDto {
           .topP(0.8)
           .topK(0)
           .temperature(0.3)
-          .maxTokens(2000)
+          .maxTokens(10000)
           .repeatPenalty(5.0)
           .build();
     }

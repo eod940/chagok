@@ -7,6 +7,11 @@ spring:
   banner:
     location: banner.txt
 
+  r2dbc:
+    url: ${R2DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PW}
+
   profiles:
     include: secret
 

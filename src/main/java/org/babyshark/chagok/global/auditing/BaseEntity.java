@@ -18,8 +18,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseEntity {
-  @Builder.Default
-  protected boolean isDeleted = Boolean.FALSE;
   @CreatedDate
   private LocalDateTime createdDateTime;
   @LastModifiedDate
