@@ -1,5 +1,6 @@
 package org.babyshark.chagok.domain.asset.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,8 @@ import net.minidev.json.annotate.JsonIgnore;
 import org.babyshark.chagok.domain.asset.dto.AssetRequest;
 import org.babyshark.chagok.domain.member.domain.Member;
 import org.babyshark.chagok.global.auditing.BaseEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @SuperBuilder
@@ -31,11 +34,12 @@ public class Asset extends BaseEntity {
   private long assetId;
 
   @JsonIgnore
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "member_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Member member;  // 사용자
 
-  @OneToMany(mappedBy = "asset")
+  @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<AssetCategory> assetCategories;  // 고정지출 항목들
 
   private BigDecimal monthlyAllowance;  // 한 달 용돈

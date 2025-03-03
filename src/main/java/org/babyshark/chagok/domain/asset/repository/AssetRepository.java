@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, Long> {
 
-  List<Asset> getAssetsByMember_MemberId(long memberId);
   List<Asset> findAllByMember_MemberId(long memberId);
 }

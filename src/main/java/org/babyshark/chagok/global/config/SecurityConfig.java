@@ -54,7 +54,7 @@ public class SecurityConfig {
           config.addAllowedMethod("*");
           config.setAllowedOrigins(
               List.of("http://localhost:3000", "http://localhost:8080", "http://localhost:5173,",
-                  "https://chagok.vercel.app"));
+                  "https://chagok.vercel.app", "https://chagok.shop"));
           return config;
         }))
         .csrf(AbstractHttpConfigurer::disable)

@@ -15,7 +15,6 @@ import org.babyshark.chagok.domain.asset.repository.AssetRepository;
 import org.babyshark.chagok.domain.member.domain.Member;
 import org.babyshark.chagok.domain.member.repository.MemberRepository;
 import org.babyshark.chagok.global.error.CustomException;
-import org.babyshark.chagok.global.model.ErrorCode;
 import static org.babyshark.chagok.global.model.ErrorCode.PAGE_NOT_FOUND;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,5 +1,6 @@
 package org.babyshark.chagok.domain.chat.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,7 +26,7 @@ public class ChatMessage extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long chatMessageId;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "member_id")
   private Member member;
 

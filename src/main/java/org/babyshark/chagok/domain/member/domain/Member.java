@@ -1,5 +1,6 @@
 package org.babyshark.chagok.domain.member.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,10 +17,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.babyshark.chagok.domain.asset.domain.Asset;
+import org.babyshark.chagok.domain.chat.domain.ChatMessage;
 import org.babyshark.chagok.domain.member.dto.SignupForm;
 import org.babyshark.chagok.global.auditing.BaseEntity;
 import org.babyshark.chagok.global.model.Provider;
 import org.babyshark.chagok.global.model.Role;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -40,8 +44,11 @@ public class Member extends BaseEntity {
   private String age;  // 연령대
   private String refreshToken;  // 리프레시 토큰(TokenService)
 
-  @OneToMany(mappedBy = "member")
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Asset> assets = new ArrayList<>();
+
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ChatMessage> chatMessages = new ArrayList<>();
 
   @ElementCollection
   @Enumerated(EnumType.STRING)

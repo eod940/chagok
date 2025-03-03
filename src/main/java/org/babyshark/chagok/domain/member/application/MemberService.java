@@ -40,7 +40,8 @@ public class MemberService implements UserDetailsService {
 
     if (optionalMember.isEmpty()) {
       log.warn("MemberService reissue tokens: Empty Member!");
-      return null;
+      throw new CustomException(ErrorCode.INVALID_JWT_M);
+//      return null;
     }
     Member member = optionalMember.get();
     String newRefreshToken = reissueRefreshToken(member);
@@ -82,5 +83,10 @@ public class MemberService implements UserDetailsService {
   public Member getMember(long memberId) {
     return memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.INVALID_JWT_M));
+  }
+
+  @Transactional
+  public void deleteMember(long memberId) {
+    memberRepository.deleteById(memberId);
   }
 }

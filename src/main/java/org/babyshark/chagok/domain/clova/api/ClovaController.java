@@ -21,33 +21,33 @@ public class ClovaController {
 
   private final ClovaService clovaService;
   private final TokenService tokenService;
-  private final ChatMessageService chatMessageService;
 
   @PostMapping("/entj")
-  public ResponseEntity<Flux<String>> getENTJAnswer(@RequestBody MessageOnly message) {
+  public ResponseEntity<Flux<String>> getENTJAnswer(@RequestBody MessageOnly message,
+      @RequestHeader("Authorization") String token) {
+    tokenService.getMemberId(token);
     return ResponseEntity.ok(clovaService.createENTJPersona(message.message()));
   }
 
   @PostMapping("/istj")
-  public ResponseEntity<Flux<String>> getISTJAnswer(@RequestBody MessageOnly message) {
+  public ResponseEntity<Flux<String>> getISTJAnswer(@RequestBody MessageOnly message,
+      @RequestHeader("Authorization") String token) {
+    tokenService.getMemberId(token);
     return ResponseEntity.ok(clovaService.createISTJPersona(message.message()));
   }
 
   @PostMapping("/enfp")
-  public ResponseEntity<Flux<String>> getENFPAnswer(@RequestBody MessageOnly message) {
+  public ResponseEntity<Flux<String>> getENFPAnswer(@RequestBody MessageOnly message,
+      @RequestHeader("Authorization") String token) {
+    tokenService.getMemberId(token);
     return ResponseEntity.ok(clovaService.createENFPPersona(message.message()));
   }
 
   @PostMapping("/isfp")
   public ResponseEntity<Flux<String>> getISFPAnswer(@RequestBody MessageOnly message,
       @RequestHeader("Authorization") String token) {
-    // 사용자 인증
-    Long memberId = tokenService.getMemberId(token);
-    // AI 답변 요청
-    Flux<String> isfpPersona = clovaService.createISFPPersona(message.message());
-    // 사용자의 메시지와 답변을 DB에 저장
-    chatMessageService.createChat(memberId, message, isfpPersona, Mbti.ISFP);
-    return ResponseEntity.ok(isfpPersona);
+    tokenService.getMemberId(token);
+    return ResponseEntity.ok(clovaService.createISFPPersona(message.message()));
   }
 
   @PostMapping("/assetAssist")
